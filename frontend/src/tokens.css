@@ -1,0 +1,100 @@
+/* Design tokens: colors, motion, radii, shadows, and easings */
+:root {
+  /* Base tones: deep navy/near-black for cinematic depth */
+  --bg-void: #05060a;
+  --bg-deep: #070812;
+  --bg-navy: #071028;
+  --bg-card: rgba(12, 14, 24, 0.86);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --text-primary: #f7fafc;
+  --text-secondary: #9aa6bb;
+  --text-tertiary: #7b8796;
+
+  /* Cinematic neon accents (subtle, desaturated for elegance) */
+  --neo-cyan: rgba(34, 211, 238, 0.08);
+  --neo-cyan-strong: rgba(34, 211, 238, 0.32);
+  --neo-violet: rgba(139, 92, 246, 0.08);
+  --neo-violet-strong: rgba(139, 92, 246, 0.28);
+  --neo-magenta: rgba(217, 70, 239, 0.06);
+  --neo-blue: rgba(99, 102, 241, 0.06);
+
+  /* Ambient / glow controls */
+  --ambient-glow: rgba(99, 102, 241, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-blur: 20px;
+
+  /* Gradients composed for the page background */
+  --bg-gradient-layer-1: radial-gradient(60% 40% at 10% 18%, var(--neo-violet) 0%, transparent 42%);
+  --bg-gradient-layer-2: radial-gradient(80% 50% at 88% 30%, var(--neo-cyan) 0%, transparent 36%);
+  --bg-gradient-layer-3: radial-gradient(36% 28% at 76% 82%, var(--neo-magenta) 0%, transparent 44%);
+  --bg-linear: linear-gradient(180deg, #04050a 0%, #060712 38%, #070812 100%);
+
+  --accent: #6366f1;
+  --accent-bright: #818cf8;
+  --accent-glow: rgba(99, 102, 241, 0.28);
+  --success: #22c55e;
+
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow-soft: 0 4px 24px -4px rgba(0, 0, 0, 0.48);
+  --shadow-deep: 0 16px 48px -12px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 48px -14px rgba(99, 102, 241, 0.08);
+
+  /* Motion tokens */
+  --motion-fast: 120ms;
+  --motion-medium: 220ms;
+  --motion-slow: 420ms;
+  --easing-default: cubic-bezier(.2,.9,.25,1);
+  --easing-soft: cubic-bezier(.16,.84,.44,1);
+  --focus-ring: 0 0 0 4px rgba(99,102,241,0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-medium: 1ms;
+    --motion-slow: 1ms;
+  }
+}
+
+/* Typography & density tokens */
+:root {
+  --type-xs: 12px;
+  --type-sm: 13px;
+  --type-md: 14px;
+  --type-lg: 16px;
+  --type-xl: 20px;
+
+  --node-padding: 16px;
+  --node-padding-compact: 10px;
+  --node-min-width: 220px;
+  --node-min-width-compact: 160px;
+
+  --draggable-height: 44px;
+  --draggable-height-compact: 36px;
+
+  --canvas-padding: 16px;
+  --canvas-padding-compact: 8px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --type-md: 13px;
+    --node-padding: var(--node-padding-compact);
+    --node-min-width: var(--node-min-width-compact);
+    --draggable-height: var(--draggable-height-compact);
+    --canvas-padding: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --type-md: 12px;
+    --node-padding: 8px;
+    --node-min-width: 140px;
+    --draggable-height: 34px;
+    --canvas-padding: 8px;
+  }
+}
+

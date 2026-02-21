@@ -1,0 +1,735 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+/* Import centralized design tokens (colors, motion, shadows, radii) */
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+/* ========== BRIGHT AI PIPELINE ATMOSPHERE ========== */
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* cinematic layered background: deep linear base + soft radial light sources */
+  background: var(--bg-linear);
+  background-image:
+    var(--bg-gradient-layer-1),
+    var(--bg-gradient-layer-2),
+    var(--bg-gradient-layer-3),
+    var(--bg-linear);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* base type size controlled by tokens */
+html { font-size: var(--type-md); }
+
+/* subtle ambient glow layer to create soft bloom and depth */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(40% 30% at 12% 16%, rgba(139, 92, 246, 0.12) 0%, transparent 46%),
+    radial-gradient(60% 40% at 88% 28%, rgba(34, 211, 238, 0.10) 0%, transparent 42%),
+    radial-gradient(28% 22% at 80% 82%, rgba(217, 70, 239, 0.06) 0%, transparent 48%);
+  filter: blur(36px);
+  opacity: 0.95;
+  mix-blend-mode: screen;
+}
+
+/* ensure app content sits above ambient layer */
+.app-root { position: relative; z-index: 1; }
+
+code {
+  font-family: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ========== TOOLBAR - PREMIUM APP CHROME ========== */
+.pipeline-toolbar {
+  padding: 20px 32px 22px;
+  margin: 20px 24px 0;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border-default);
+  box-shadow:
+    var(--shadow-soft),
+    0 1px 0 0 rgba(255, 255, 255, 0.05) inset;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.pipeline-toolbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.6;
+}
+
+.toolbar-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.toolbar-brand {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px -2px var(--accent-glow);
+}
+
+.app-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #fff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-subtitle {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent-bright);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.toolbar-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========== DRAGGABLE NODE PILLS - PREMIUM CHIPS ========== */
+.draggable-node {
+  cursor: grab;
+  min-width: 96px;
+  height: var(--draggable-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px 0 14px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: transform var(--motion-medium) var(--easing-soft),
+    box-shadow var(--motion-medium) var(--easing-default),
+    border-color var(--motion-fast) var(--easing-default);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 12px -4px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.draggable-node::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+}
+
+.draggable-node:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.5);
+}
+
+.draggable-node:active {
+  cursor: grabbing;
+  transform: translateY(0) scale(1);
+}
+
+.draggable-node.customInput { color: #67e8f9; }
+.draggable-node.customInput::before { background: linear-gradient(180deg, #22d3ee, #06b6d4); }
+.draggable-node.customInput:hover { border-color: rgba(34, 211, 238, 0.5); box-shadow: 0 12px 28px -8px rgba(34, 211, 238, 0.2); }
+
+.draggable-node.llm { color: #c4b5fd; }
+.draggable-node.llm::before { background: linear-gradient(180deg, #a78bfa, #8b5cf6); }
+.draggable-node.llm:hover { border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 12px 28px -8px rgba(139, 92, 246, 0.25); }
+
+.draggable-node.customOutput { color: #6ee7b7; }
+.draggable-node.customOutput::before { background: linear-gradient(180deg, #34d399, #10b981); }
+.draggable-node.customOutput:hover { border-color: rgba(52, 211, 153, 0.5); box-shadow: 0 12px 28px -8px rgba(52, 211, 153, 0.2); }
+
+.draggable-node.text { color: #93c5fd; }
+.draggable-node.text::before { background: linear-gradient(180deg, #60a5fa, #3b82f6); }
+.draggable-node.text:hover { border-color: rgba(96, 165, 250, 0.5); box-shadow: 0 12px 28px -8px rgba(59, 130, 246, 0.2); }
+
+.draggable-node.math { color: #fdba74; }
+.draggable-node.math::before { background: linear-gradient(180deg, #fb923c, #ea580c); }
+.draggable-node.math:hover { border-color: rgba(251, 146, 60, 0.5); box-shadow: 0 12px 28px -8px rgba(251, 146, 60, 0.2); }
+
+.draggable-node.delay { color: #a5b4fc; }
+.draggable-node.delay::before { background: linear-gradient(180deg, #818cf8, #6366f1); }
+.draggable-node.delay:hover { border-color: rgba(129, 140, 248, 0.5); }
+
+.draggable-node.condition { color: #fde047; }
+.draggable-node.condition::before { background: linear-gradient(180deg, #facc15, #eab308); }
+.draggable-node.condition:hover { border-color: rgba(253, 224, 71, 0.45); }
+
+.draggable-node.logger { color: #cbd5e1; }
+.draggable-node.logger::before { background: linear-gradient(180deg, #94a3b8, #64748b); }
+.draggable-node.logger:hover { border-color: rgba(148, 163, 184, 0.45); }
+
+.draggable-node.api { color: #e879f9; }
+.draggable-node.api::before { background: linear-gradient(180deg, #d946ef, #c026d3); }
+.draggable-node.api:hover { border-color: rgba(217, 70, 239, 0.5); box-shadow: 0 12px 28px -8px rgba(217, 70, 239, 0.2); }
+
+/* ========== CANVAS - CINEMATIC GLASS PANEL ========== */
+.pipeline-main {
+  flex: 1;
+  display: flex;
+  padding: var(--canvas-padding);
+  min-height: 0;
+}
+
+.pipeline-canvas {
+  flex: 1;
+  width: 100%;
+  min-height: 55vh;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  /* glass panel with a refined cinematic tint */
+  background-image:
+    linear-gradient(165deg, rgba(8, 10, 18, 0.86) 0%, rgba(10, 12, 20, 0.95) 100%),
+    radial-gradient(60% 30% at 18% 12%, rgba(139,92,246,0.02) 0%, transparent 40%),
+    radial-gradient(60% 30% at 86% 28%, rgba(34,211,238,0.02) 0%, transparent 40%);
+  background-color: rgba(8,10,16,0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+  box-shadow:
+    var(--shadow-deep),
+    0 0 0 1px rgba(0, 0, 0, 0.2) inset,
+    0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+/* React Flow container - ensure visible canvas */
+.react-flow {
+  background: transparent !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.react-flow__renderer {
+  background: transparent !important;
+}
+
+.react-flow__pane {
+  cursor: grab;
+}
+
+/* ========== AI PIPELINE GRID + NEURAL NODES PATTERN ========== */
+.react-flow__background {
+  /* soft, low-contrast grid to preserve cinematic depth */
+  background-color: rgba(8, 10, 18, 0.45) !important;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0),
+    radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.03) 2px, transparent 0);
+  background-size: 40px 40px, 40px 40px !important;
+  background-position: 0 0, 2px 2px !important;
+  opacity: 0.95;
+}
+
+/* ========== LUMINOUS CONNECTOR LINES - CINEMATIC LIGHT TRAILS ========== */
+.react-flow__edge {
+  cursor: pointer;
+}
+
+.react-flow__edge-path {
+  stroke: rgba(99, 102, 241, 0.75) !important;
+  stroke-width: 2.5 !important;
+  fill: none !important;
+  stroke-linecap: round !important;
+  filter:
+    drop-shadow(0 0 4px rgba(99, 102, 241, 0.35))
+    drop-shadow(0 0 12px rgba(99, 102, 241, 0.2))
+    drop-shadow(0 0 24px rgba(139, 92, 246, 0.12));
+  transition: filter var(--motion-medium) var(--easing-default), stroke var(--motion-medium) var(--easing-default);
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: rgba(139, 92, 246, 0.55) !important;
+  filter:
+    drop-shadow(0 0 6px rgba(139, 92, 246, 0.4))
+    drop-shadow(0 0 16px rgba(139, 92, 246, 0.25))
+    drop-shadow(0 0 32px rgba(139, 92, 246, 0.15));
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: rgba(34, 211, 238, 0.6) !important;
+  filter:
+    drop-shadow(0 0 8px rgba(34, 211, 238, 0.45))
+    drop-shadow(0 0 20px rgba(34, 211, 238, 0.25))
+    drop-shadow(0 0 40px rgba(34, 211, 238, 0.12));
+  animation: edge-glow var(--motion-slow) var(--easing-soft) infinite alternate;
+}
+
+.react-flow__edge.animated path {
+  stroke-dasharray: 8 12;
+  animation: flow-trail 1.2s linear infinite;
+}
+
+@keyframes flow-trail {
+  to { stroke-dashoffset: -20; }
+}
+
+/* subtle animated glow for selected edges */
+@keyframes edge-glow {
+  from {
+    filter:
+      drop-shadow(0 0 6px rgba(34,211,238,0.28))
+      drop-shadow(0 0 16px rgba(34,211,238,0.18));
+  }
+  to {
+    filter:
+      drop-shadow(0 0 12px rgba(34,211,238,0.36))
+      drop-shadow(0 0 28px rgba(34,211,238,0.24));
+  }
+}
+
+/* Focus states using soft ring */
+.vs-button:focus-visible,
+.react-flow__controls-button:focus,
+.vs-input:focus-visible,
+.vs-select:focus-visible,
+.vs-textarea:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-medium: 1ms;
+    --motion-slow: 1ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+.react-flow__edge marker path {
+  fill: rgba(99, 102, 241, 0.5) !important;
+}
+
+.react-flow__edge.selected marker path {
+  fill: rgba(34, 211, 238, 0.7) !important;
+}
+
+/* Connection line while dragging */
+.react-flow__connection-path {
+  stroke: rgba(139, 92, 246, 0.5) !important;
+  stroke-width: 2 !important;
+  filter:
+    drop-shadow(0 0 6px rgba(139, 92, 246, 0.3))
+    drop-shadow(0 0 16px rgba(139, 92, 246, 0.15));
+}
+
+/* ========== CONTROLS & MINIMAP - HIGHLY VISIBLE ========== */
+.react-flow__controls {
+  background: rgba(15, 15, 28, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+  fill: #e2e8f0 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+
+.react-flow__controls-button:last-child {
+  border-bottom: none !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.react-flow__controls-button svg {
+  max-width: 16px;
+  max-height: 16px;
+}
+
+.react-flow__minimap {
+  background: rgba(15, 15, 28, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+.react-flow__minimap svg {
+  border-radius: 10px;
+}
+
+/* ========== SUBMIT BUTTON - HERO CTA ========== */
+.submit-bar {
+  display: flex;
+  justify-content: center;
+  padding: 24px 24px 32px;
+}
+
+.vs-button {
+  border-radius: var(--radius);
+  border: none;
+  padding: 14px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--easing-default), box-shadow var(--motion-medium) var(--easing-default);
+}
+
+.vs-button--primary {
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  color: #fff;
+  box-shadow:
+    0 4px 20px -4px var(--accent-glow),
+    0 1px 0 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.vs-button--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 36px -8px var(--accent-glow),
+    0 1px 0 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.vs-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.vs-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-bar .vs-button--primary {
+  padding: 16px 40px;
+  font-size: 15px;
+}
+
+/* ========== NODES - FLOATING GLASS CARDS ========== */
+.vs-node {
+  min-width: var(--node-min-width);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: var(--radius);
+  padding: var(--node-padding);
+  border: 1px solid var(--border-default);
+  box-shadow:
+    0 4px 24px -4px rgba(0, 0, 0, 0.4),
+    0 12px 48px -12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+  color: var(--text-primary);
+  transition: transform var(--motion-medium) var(--easing-soft), box-shadow var(--motion-medium) var(--easing-default), border-color var(--motion-fast) var(--easing-default), background-color var(--motion-fast) var(--easing-default);
+  will-change: transform;
+}
+
+/* Performance: simplify styles during node drag to reduce lag */
+.pipeline-canvas.is-dragging .vs-node {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: none;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.5);
+}
+
+.pipeline-canvas.is-dragging .vs-node:hover {
+  transform: none;
+}
+
+.vs-node:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 40px -8px rgba(0, 0, 0, 0.45),
+    0 24px 64px -16px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.react-flow__node.selected .vs-node {
+  box-shadow:
+    0 8px 32px -6px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(99, 102, 241, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.vs-node__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.vs-node__title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.vs-node__delete {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.06);
+  color: #f87171;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.vs-node__delete:hover {
+  background: rgba(239, 68, 68, 0.14);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.vs-node__delete:active {
+  transform: scale(0.94);
+}
+
+.vs-node__description {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+}
+
+.vs-node__content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vs-node__hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Node accent glows */
+.vs-node--input { border-color: rgba(34, 211, 238, 0.2); }
+.vs-node--input:hover { border-color: rgba(34, 211, 238, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(34, 211, 238, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--input { border-color: rgba(34, 211, 238, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(34, 211, 238, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+.vs-node--output { border-color: rgba(34, 197, 94, 0.2); }
+.vs-node--output:hover { border-color: rgba(34, 197, 94, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(34, 197, 94, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--output { border-color: rgba(34, 197, 94, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(34, 197, 94, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+.vs-node--llm { border-color: rgba(139, 92, 246, 0.2); }
+.vs-node--llm:hover { border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--llm { border-color: rgba(139, 92, 246, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+.vs-node--text { border-color: rgba(59, 130, 246, 0.2); }
+.vs-node--text:hover { border-color: rgba(59, 130, 246, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--text { border-color: rgba(59, 130, 246, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+.vs-node--math { border-color: rgba(251, 146, 60, 0.2); }
+.vs-node--math:hover { border-color: rgba(251, 146, 60, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(251, 146, 60, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--math { border-color: rgba(251, 146, 60, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(251, 146, 60, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+.vs-node--logic { border-color: rgba(253, 224, 71, 0.18); }
+.vs-node--logic:hover { border-color: rgba(253, 224, 71, 0.35); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 20px -8px rgba(253, 224, 71, 0.08), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--logic { border-color: rgba(253, 224, 71, 0.4); }
+
+.vs-node--utility { border-color: rgba(148, 163, 184, 0.18); }
+.vs-node--utility:hover { border-color: rgba(148, 163, 184, 0.35); }
+.react-flow__node.selected .vs-node--utility { border-color: rgba(148, 163, 184, 0.4); }
+
+.vs-node--api { border-color: rgba(217, 70, 239, 0.2); }
+.vs-node--api:hover { border-color: rgba(217, 70, 239, 0.4); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.45), 0 0 24px -8px rgba(217, 70, 239, 0.1), inset 0 1px 0 rgba(255,255,255,0.06); }
+.react-flow__node.selected .vs-node--api { border-color: rgba(217, 70, 239, 0.45); box-shadow: 0 8px 32px -6px rgba(0,0,0,0.45), 0 0 32px -8px rgba(217, 70, 239, 0.15), inset 0 1px 0 rgba(255,255,255,0.05); }
+
+/* Form elements */
+.vs-field { display: flex; flex-direction: column; gap: 6px; }
+.vs-label { display: flex; flex-direction: column; gap: 4px; }
+.vs-label__text { font-size: 11px; color: var(--text-tertiary); font-weight: 500; }
+
+.vs-input,
+.vs-select,
+.vs-textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* Custom select component styles (replaces native dropdown visuals) */
+.custom-select { position: relative; display: block; }
+.custom-select__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  border: 1px solid var(--border-default);
+  padding: 8px 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.custom-select__label { pointer-events: none; }
+.custom-select__arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(255,255,255,0.6);
+  border-bottom: 2px solid rgba(255,255,255,0.6);
+  transform: rotate(-45deg);
+  margin-left: 8px;
+  transition: transform var(--motion-fast) var(--easing-default), opacity var(--motion-fast) var(--easing-default);
+  opacity: 0.9;
+}
+.custom-select__arrow.open { transform: rotate(135deg); }
+.custom-select__list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(10,12,20,0.98), rgba(8,10,16,0.98));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.6), 0 4px 24px rgba(99,102,241,0.04);
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 4000;
+  max-height: 240px;
+  overflow: auto;
+}
+.custom-select__item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+}
+.custom-select__item:hover { background: rgba(99,102,241,0.06); }
+.custom-select__item.selected { background: rgba(99,102,241,0.08); color: var(--text-primary); box-shadow: 0 4px 18px -6px rgba(99,102,241,0.06); }
+
+
+.vs-input:focus,
+.vs-select:focus,
+.vs-textarea:focus {
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.vs-textarea {
+  resize: none;
+  min-height: 64px;
+}
+
+/* Handles - larger for easier grab when reconnecting edges */
+.react-flow__handle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  background: rgba(99, 102, 241, 0.4);
+  transition: transform var(--motion-fast) var(--easing-default), box-shadow var(--motion-medium) var(--easing-default), background var(--motion-fast) var(--easing-default), border-color var(--motion-fast) var(--easing-default);
+}
+
+.react-flow__handle.connectable {
+  cursor: crosshair;
+}
+
+.react-flow__handle.connectable:hover {
+  background: rgba(139, 92, 246, 0.6);
+  border-color: rgba(139, 92, 246, 0.8);
+  box-shadow: 0 0 16px -2px rgba(139, 92, 246, 0.5);
+  transform: scale(1.2);
+}
+
+/* Edge updater - draggable connection points for reconnecting */
+.react-flow__edgeupdater {
+  cursor: grab;
+  fill: rgba(139, 92, 246, 0.6);
+}
+
+.react-flow__edgeupdater:active {
+  cursor: grabbing;
+}
