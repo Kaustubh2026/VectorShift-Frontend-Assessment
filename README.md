@@ -1,5 +1,6 @@
-VectorShift Frontend Technical Assessment
-Overview
+# VectorShift Frontend Technical Assessment
+
+## Overview
 
 This project implements a visual pipeline builder using React and FastAPI.
 
@@ -7,41 +8,48 @@ The application allows users to create node-based workflows, connect them throug
 
 The assessment focuses on component abstraction, dynamic UI behavior, interface styling, and backend graph validation.
 
-Implemented Features
+---
 
-• Reusable node abstraction using a BaseNode component
-• Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
-• Unified and consistent UI styling
-• Auto-resizing Text node
-• Dynamic variable handle generation using {{variable}} syntax
-• Frontend → Backend integration
-• Pipeline validation via DAG (Directed Acyclic Graph) detection
+## Implemented Features
 
-Tech Stack
+• Reusable node abstraction using a BaseNode component  
+• Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)  
+• Unified and consistent UI styling  
+• Auto-resizing Text node  
+• Dynamic variable handle generation using {{variable}} syntax  
+• Frontend → Backend integration  
+• Pipeline validation via DAG (Directed Acyclic Graph) detection  
 
-Frontend
--> `React`
+---
+
+## Tech Stack
+
+### Frontend
+-> `React`  
 -> `React Flow`
 
-Backend
--> `Python`
+### Backend
+-> `Python`  
 -> `FastAPI`
 
-How to Run the Project
-Frontend
+---
 
-`cd frontend`
-`npm install`
-`npm start`
+## How to Run the Project
 
-Application →` http://localhost:3000`
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+
+Application → http://localhost:3000
 
 Backend
+cd backend
+uvicorn main:app --reload
 
-`cd backend`
-`uvicorn main:app --reload`
-
-API → `http://localhost:8000`
+API → http://localhost:8000
 
 Pipeline Validation
 
