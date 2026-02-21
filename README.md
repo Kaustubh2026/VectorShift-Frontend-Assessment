@@ -5,22 +5,22 @@ This project implements a visual pipeline builder using React and FastAPI.
 
 The application allows users to create node-based workflows, connect them through edges, and validate pipeline structure via backend analysis.
 
-The assessment focuses on:
+🧩 Assessment Focus
 
 • Component abstraction
 • Dynamic UI behavior
 • Interface styling
 • Backend graph validation
 
-🧩 Implemented Features
+✅ Implemented Features
 
-✅ Reusable node abstraction using a BaseNode component
-✅ Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
-✅ Unified and consistent UI styling
-✅ Auto-resizing Text node
-✅ Dynamic variable handle generation using {{variable}} syntax
-✅ Frontend → Backend integration
-✅ Pipeline validation via DAG (Directed Acyclic Graph) detection
+✔ Reusable node abstraction using a BaseNode component
+✔ Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
+✔ Unified and consistent UI styling
+✔ Auto-resizing Text node
+✔ Dynamic variable handle generation using {{variable}} syntax
+✔ Frontend → Backend integration
+✔ Pipeline validation via DAG (Directed Acyclic Graph) detection
 
 🛠 Tech Stack
 
