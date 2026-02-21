@@ -1,71 +1,121 @@
 🚀 VectorShift Frontend Technical Assessment
-✨ Overview
+📌 Overview
 
 This project implements a visual pipeline builder using React and FastAPI.
 
-The application allows users to create node-based workflows, connect them through edges, and validate pipeline structure via backend analysis.
+The application allows users to create node-based workflows, connect them via edges, and validate the pipeline structure through backend analysis.
 
-🧩 Assessment Focus
+The assessment focuses on:
 
-• Component abstraction
-• Dynamic UI behavior
-• Interface styling
-• Backend graph validation
+Component abstraction
+
+Dynamic UI behavior
+
+Interface styling
+
+Backend graph validation
 
 ✅ Implemented Features
 
-✔ Reusable node abstraction using a BaseNode component
-✔ Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
-✔ Unified and consistent UI styling
-✔ Auto-resizing Text node
-✔ Dynamic variable handle generation using {{variable}} syntax
-✔ Frontend → Backend integration
-✔ Pipeline validation via DAG (Directed Acyclic Graph) detection
+✔ Reusable Node Abstraction using a BaseNode component
+✔ Multiple Node Types
+
+Input
+
+Output
+
+LLM
+
+Text
+
+Math
+
+Logger
+
+Delay
+
+Condition
+
+API Call
+
+✔ Unified & Consistent UI Styling
+✔ Auto-Resizing Text Node
+✔ Dynamic Variable Handle Generation using {{variable}} syntax
+✔ Frontend → Backend Integration
+✔ Pipeline Validation via DAG (Directed Acyclic Graph) Detection
 
 🛠 Tech Stack
 
 Frontend
-React • React Flow
+
+React
+
+React Flow
 
 Backend
-Python • FastAPI
 
-▶️ How to Run the Project
-Frontend
+Python
+
+FastAPI
+
+▶️ Getting Started
+1️⃣ Run Frontend
 cd frontend
 npm install
 npm start
 
-Application → http://localhost:3000
+Frontend runs at:
 
-Backend
+👉 http://localhost:3000
+
+2️⃣ Run Backend
 cd backend
 uvicorn main:app --reload
 
-API → http://localhost:8000
+Backend API runs at:
 
-🔎 Pipeline Validation
+👉 http://localhost:8000
 
-When submitting a pipeline, the frontend sends the nodes and edges to the backend.
+🔍 Pipeline Validation
 
-The backend:
+When a pipeline is submitted:
 
-• Calculates the number of nodes
-• Calculates the number of edges
-• Checks whether the graph forms a Directed Acyclic Graph (DAG)
+The frontend sends nodes and edges to the backend.
 
-📡 Backend Response Format
+The backend performs graph analysis.
+
+Backend Responsibilities
+
+Calculates number of nodes
+
+Calculates number of edges
+
+Checks if the graph forms a Directed Acyclic Graph (DAG)
+
+Example Response
 {
   "num_nodes": 5,
   "num_edges": 6,
   "is_dag": true
 }
-🎯 Key Design Considerations
+🎯 Design Principles
 
 This implementation emphasizes:
 
-• Component reusability
-• Minimal code duplication
-• Dynamic UI behavior
-• Clear separation of concerns
-• Maintainable structure
+Component Reusability
+
+Minimal Code Duplication
+
+Dynamic UI Behavior
+
+Clear Separation of Concerns
+
+Maintainable Structure
+
+✨ Key Highlights
+
+✔ Clean node abstraction architecture
+✔ Scalable node system
+✔ Dynamic handle generation
+✔ Smooth frontend-backend interaction
+✔ Graph-based validation logic
