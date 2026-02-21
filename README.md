@@ -1,49 +1,50 @@
-VectorShift Frontend Technical Assessment
-Overview
+🚀 VectorShift Frontend Technical Assessment
+✨ Overview
 
 This project implements a visual pipeline builder using React and FastAPI.
 
-The application allows users to create node-based workflows, connect them through edges, and validate the pipeline structure via backend analysis.
+The application allows users to create node-based workflows, connect them through edges, and validate pipeline structure via backend analysis.
 
-The assessment focuses on component abstraction, dynamic UI behavior, interface styling, and backend graph validation.
+The assessment focuses on:
 
-Implemented Features
+• Component abstraction
+• Dynamic UI behavior
+• Interface styling
+• Backend graph validation
 
-• Reusable node abstraction using a BaseNode component
-• Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
-• Unified and consistent UI styling
-• Auto-resizing Text node
-• Dynamic variable handle generation using {{variable}} syntax
-• Frontend → Backend integration
-• Pipeline validation via DAG (Directed Acyclic Graph) detection
+🧩 Implemented Features
 
-Tech Stack
+✅ Reusable node abstraction using a BaseNode component
+✅ Multiple node types (Input, Output, LLM, Text, Math, Logger, Delay, Condition, API Call)
+✅ Unified and consistent UI styling
+✅ Auto-resizing Text node
+✅ Dynamic variable handle generation using {{variable}} syntax
+✅ Frontend → Backend integration
+✅ Pipeline validation via DAG (Directed Acyclic Graph) detection
+
+🛠 Tech Stack
 
 Frontend
--> `React`
--> `React Flow`
+React • React Flow
 
 Backend
--> `Python`
--> `FastAPI`
+Python • FastAPI
 
-How to Run the Project
+▶️ How to Run the Project
 Frontend
+cd frontend
+npm install
+npm start
 
-`cd frontend`
-`npm install`
-`npm start`
-
-Application →` http://localhost:3000`
+Application → http://localhost:3000
 
 Backend
+cd backend
+uvicorn main:app --reload
 
-`cd backend`
-`uvicorn main:app --reload`
+API → http://localhost:8000
 
-API → `http://localhost:8000`
-
-Pipeline Validation
+🔎 Pipeline Validation
 
 When submitting a pipeline, the frontend sends the nodes and edges to the backend.
 
@@ -53,13 +54,13 @@ The backend:
 • Calculates the number of edges
 • Checks whether the graph forms a Directed Acyclic Graph (DAG)
 
-Backend Response Format
+📡 Backend Response Format
 {
   "num_nodes": 5,
- "num_edges": 6,
- "is_dag": true
+  "num_edges": 6,
+  "is_dag": true
 }
-Key Design Considerations
+🎯 Key Design Considerations
 
 This implementation emphasizes:
 
