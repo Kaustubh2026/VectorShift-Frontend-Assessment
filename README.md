@@ -54,11 +54,11 @@ The backend:
 • Checks whether the graph forms a Directed Acyclic Graph (DAG)
 
 Backend Response Format
-`{`
-  `"num_nodes": 5,`
-`  "num_edges": 6,`
- ` "is_dag": true`
-`}`
+{
+  "num_nodes": 5,
+ "num_edges": 6,
+ "is_dag": true
+}
 Key Design Considerations
 
 This implementation emphasizes:
